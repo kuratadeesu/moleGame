@@ -59,7 +59,7 @@ function showRandomMole() {
     clearTimeout(moleTimer);
     moleTimer = setTimeout(() => {
         hole.removeClass("active");
-    }, 300);
+    }, 500);
 }
 
 function endGame() {
