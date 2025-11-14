@@ -1,0 +1,56 @@
+body {
+    font-family: sans-serif;
+    text-align: center;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+}
+
+#game h1 {
+    margin-bottom: 10px;
+}
+
+#score {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+#field {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+.hole {
+    width: 100%;
+    height: 100%;
+    background: #8c6239;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mole {
+    width: 80%;
+    height: 80%;
+    background: brown;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -80%;
+    left: 10%;
+    transition: .15s;
+    touch-action: manipulation; /* スマホでのタップ遅延を防ぐ */
+}
+
+.hole.active .mole {
+    bottom: 10%;
+}
+
+#startBtn {
+    margin-top: 20px;
+    font-size: 18px;
+    padding: 10px 20px;
+}
