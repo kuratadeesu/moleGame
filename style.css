@@ -36,8 +36,8 @@ body {
 .mole {
     width: 80%;
     height: 80%;
-    background: brown;
-    border-radius: 50%;
+    background: url(./image/mole.png) no-repeat center/contain;
+    /*border-radius: 50%;*/
     position: absolute;
     bottom: -80%;
     left: 10%;
@@ -53,4 +53,36 @@ body {
     margin-top: 20px;
     font-size: 18px;
     padding: 10px 20px;
+}
+
+/* 終了ポップアップ */
+#resultPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+#resultPopup.hidden {
+    display: none;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+}
+
+#restartBtn {
+    margin-top: 15px;
+    font-size: 18px;
+    padding: 8px 15px;
 }

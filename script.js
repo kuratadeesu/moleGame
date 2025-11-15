@@ -3,10 +3,18 @@ let gameInterval;
 let time = 10;
 let timeInterval;
 let moleTimer;
+let gameRunning = false; // ← ① ゲーム中の連打防止
 
 $(function () {
 
     $("#startBtn").on("click", function () {
+        if (!gameRunning) {
+            startGame();
+        }
+    });
+
+    $("#restartBtn").on("click", function () {
+        $("#resultPopup").addClass("hidden");
         startGame();
     });
 
@@ -21,23 +29,29 @@ $(function () {
 });
 
 function startGame() {
-    // スコア＆時間初期化
+    gameRunning = true; // ← スタートボタン無効化
+    $("#startBtn").prop("disabled", true);
+
     score = 0;
     time = 10;
 
     $("#score").text("Score: " + score);
     $("#time").text("Time: " + time);
+    $("#resultPopup").addClass("hidden");
 
-    // いったん全て停止
     clearInterval(gameInterval);
     clearInterval(timeInterval);
     clearTimeout(moleTimer);
     $(".hole").removeClass("active");
 
-    // モグラ出現開始
-    gameInterval = setInterval(showRandomMole, 900);
+    // ② モグラの動きを少し高速化（難易度UP）
+    const appearInterval = 750; // 出現間隔（900→750）
+    const stayTime = 700; 
 
-    // 10 秒カウント開始
+    gameInterval = setInterval(() => {
+        showRandomMole(stayTime);
+    }, appearInterval);
+
     timeInterval = setInterval(() => {
         time--;
         $("#time").text("Time: " + time);
@@ -48,18 +62,17 @@ function startGame() {
     }, 1000);
 }
 
-function showRandomMole() {
+function showRandomMole(stayTime) {
     $(".hole").removeClass("active");
 
     const index = Math.floor(Math.random() * 9);
     const hole = $(".hole").eq(index);
     hole.addClass("active");
 
-    // モグラが出てる時間を制御
     clearTimeout(moleTimer);
     moleTimer = setTimeout(() => {
         hole.removeClass("active");
-    }, 700);
+    }, stayTime);
 }
 
 function endGame() {
@@ -68,5 +81,10 @@ function endGame() {
     clearTimeout(moleTimer);
     $(".hole").removeClass("active");
 
-    alert("終了！あなたのスコアは " + score + " 点です！");
+    gameRunning = false;
+    $("#startBtn").prop("disabled", false);
+
+    // ⑤ alert の代わりにポップアップ表示
+    $("#finalScore").text("あなたのスコアは " + score + " 点！");
+    $("#resultPopup").removeClass("hidden");
 }
