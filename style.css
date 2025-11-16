@@ -36,18 +36,33 @@ body {
 .mole {
     width: 80%;
     height: 80%;
-    background: url(./image/mole.png) no-repeat center/contain;
-    /*border-radius: 50%;*/
     position: absolute;
     bottom: -80%;
     left: 10%;
     transition: .15s;
-    touch-action: manipulation; /* スマホでのタップ遅延を防ぐ */
+    touch-action: manipulation;
+    image-rendering: pixelated;
 }
 
 .hole.active .mole {
     bottom: 10%;
 }
+
+/* ▼▼ ここから複数モグラ対応 ▼▼ */
+
+.mole[data-type="normal"] {
+    background: url("./image/mole_normal.png") no-repeat center / contain;
+}
+
+.mole[data-type="rare"] {
+    background: url("./image/mole_rare.png") no-repeat center / contain;
+}
+
+.mole[data-type="bad"] {
+    background: url("./image/mole_bad.png") no-repeat center / contain;
+}
+
+/* ▲▲ 複数モグラの画像指定 ▲▲ */
 
 #startBtn {
     margin-top: 20px;
@@ -55,7 +70,8 @@ body {
     padding: 10px 20px;
 }
 
-/* 終了ポップアップ */
+/* -------------- 終了ポップアップ -------------- */
+
 #resultPopup {
     position: fixed;
     top: 0;
@@ -85,4 +101,27 @@ body {
     margin-top: 15px;
     font-size: 18px;
     padding: 8px 15px;
+}
+
+/* 浮き文字エフェクト */
+.floating-text {
+    position: absolute;
+    font-size: 20px;
+    font-weight: bold;
+    animation: floatUp 0.8s ease-out forwards;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+
+#difficulty {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+#difficulty label {
+    margin: 0 10px;
 }

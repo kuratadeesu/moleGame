@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>モグラたたき</title>
+
     <link rel="stylesheet" href="./style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -11,25 +12,36 @@
 
 <div id="game">
     <h1>モグラたたき</h1>
+
     <div id="score">Score: 0</div>
     <div id="time">Time: 10</div>
 
+    <!-- ▼ 難易度選択 ▼ -->
+    <div id="difficulty">
+        <label><input type="radio" name="diff" value="easy" checked> EASY</label>
+        <label><input type="radio" name="diff" value="normal"> NORMAL</label>
+        <label><input type="radio" name="diff" value="hard"> HARD</label>
+    </div>
+    <!-- ▲ 難易度選択 ▲ -->
+
     <div id="field">
-        <!-- 9個の穴（3×3） -->
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
-        <div class="hole"><div class="mole"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
+        <div class="hole"><div class="mole" data-type="normal"></div></div>
     </div>
 
     <button id="startBtn">Start!</button>
 </div>
 
+<!-- ▼ 終了ポップアップ ▼ -->
 <div id="resultPopup" class="hidden">
     <div class="popup-content">
         <h2>ゲーム終了！</h2>
@@ -37,8 +49,8 @@
         <button id="restartBtn">もう一度プレイ</button>
     </div>
 </div>
+<!-- ▲ 終了ポップアップ ▲ -->
 
 <script src="./script.js"></script>
-
 </body>
 </html>
