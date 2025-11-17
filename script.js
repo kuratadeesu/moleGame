@@ -21,8 +21,9 @@ $(function () {
 
     $("#restartBtn").on("click", function () {
         $("#resultPopup").addClass("hidden");
-        startGame();
     });
+
+    $("#startBtn").prop("disabled", false);
 
     // イベントを1回だけバインド（動的にdata-typeを書き換えてもOK）
     $(".mole").on("click touchstart", function (e) {
@@ -108,6 +109,10 @@ function showRandomMole(stayTime) {
 
     const type = getRandomMoleType();
     mole.attr("data-type", type);
+    // レアモグラならキラキラ演出
+    if (type === "rare") {
+        createSparkleEffect(hole);
+    }
 
     hole.addClass("active");
 
@@ -120,8 +125,8 @@ function showRandomMole(stayTime) {
 // モグラ確率
 function getRandomMoleType() {
     const r = Math.random();
-    if (r < 0.70) return "normal"; // 70%
-    if (r < 0.95) return "rare";   // 25%
+    if (r < 0.50) return "normal"; // 70%
+    if (r < 0.85) return "rare";   // 25%
     return "bad";                  // 5%
 }
 
@@ -164,4 +169,29 @@ function showFloatingText(pageX, pageY, value) {
 
     // アニメーション後に削除
     setTimeout(() => { text.remove(); }, 900);
+}
+
+// ★ キラキラエフェクト
+function createSparkleEffect(hole) {
+    const holePos = hole.position();
+
+    for (let i = 0; i < 4; i++) {
+        const sparkle = $("<div class='sparkle'></div>");
+
+        // キラキラのランダム位置
+        const offsetX = Math.random() * 40 - 20; // -20〜+20
+        const offsetY = Math.random() * 40 - 20;
+
+        sparkle.css({
+            top: holePos.top + 30 + offsetY + "px",
+            left: holePos.left + 30 + offsetX + "px"
+        });
+
+        $("#game").append(sparkle);
+
+        // 終わったら消す
+        setTimeout(() => {
+            sparkle.remove();
+        }, 600);
+    }
 }

@@ -1,54 +1,86 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Press Start 2P', monospace;
     text-align: center;
-    background: #f2f2f2;
+    background: #d7d1c9;
     margin: 0;
     padding: 20px;
+    color: #2d2d2d;
 }
+
+/* Google Fonts を使わずにピクセル風の見た目を再現 */
+body, button {
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+/* ===============================
+   ● タイトル
+================================= */
 
 #game h1 {
     margin-bottom: 10px;
+    font-size: 18px;
+    text-shadow: 2px 2px 0 #ffffff, -1px -1px 0 #777;
 }
 
-#score {
-    font-size: 22px;
-    margin-bottom: 20px;
+/* ===============================
+   ● スコア / 時間
+================================= */
+
+#score, #time {
+    font-size: 14px;
+    margin-bottom: 10px;
+    padding: 5px 0;
+    background: #f5f3f1;
+    border: 2px solid #444;
+    display: inline-block;
+    width: 150px;
+    border-radius: 4px;
 }
+
+/* ===============================
+   ● ゲームフィールド
+================================= */
 
 #field {
     width: 300px;
     height: 300px;
-    margin: 0 auto;
+    margin: 0 auto 15px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+    grid-gap: 6px;
 }
 
+/* 穴：レトロ感を出すための角ばった影 */
 .hole {
     width: 100%;
     height: 100%;
-    background: #8c6239;
-    border-radius: 10px;
+    background: #8f6b49;
+    border: 3px solid #3b2a17;
     position: relative;
     overflow: hidden;
+    box-shadow: inset 0 0 0 3px #5a412b;
 }
 
 .mole {
-    width: 80%;
-    height: 80%;
+    width: 85%;
+    height: 85%;
     position: absolute;
-    bottom: -80%;
-    left: 10%;
+    bottom: -85%;
+    left: 7%;
     transition: .15s;
     touch-action: manipulation;
     image-rendering: pixelated;
 }
 
 .hole.active .mole {
-    bottom: 10%;
+    bottom: 5%;
 }
 
-/* ▼▼ ここから複数モグラ対応 ▼▼ */
+
+/* ===============================
+   ● モグラ画像
+================================= */
 
 .mole[data-type="normal"] {
     background: url("./image/mole_normal.png") no-repeat center / contain;
@@ -64,13 +96,41 @@ body {
 
 /* ▲▲ 複数モグラの画像指定 ▲▲ */
 
-#startBtn {
-    margin-top: 20px;
-    font-size: 18px;
+/* ===============================
+   ● ピクセル風ボタン
+================================= */
+
+#startBtn, #restartBtn {
+    font-size: 14px;
     padding: 10px 20px;
+    background: #f5f3f1;
+    border: 3px solid #333;
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #000;
 }
 
-/* -------------- 終了ポップアップ -------------- */
+#startBtn:hover,
+#restartBtn:hover {
+    background: #ffffff;
+}
+
+/* ===============================
+   ● 難易度選択
+================================= */
+
+#difficulty {
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+#difficulty label {
+    margin: 0 8px;
+}
+
+/* ===============================
+   ● 結果ポップアップ
+================================= */
 
 #resultPopup {
     position: fixed;
@@ -78,7 +138,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.35);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,38 +150,55 @@ body {
 }
 
 .popup-content {
-    background: #fff;
-    padding: 25px;
-    border-radius: 12px;
+    background: #f5f3f1;
+    padding: 20px;
+    border: 3px solid #444;
     width: 80%;
-    max-width: 300px;
+    max-width: 280px;
+    box-shadow: 4px 4px 0 #000;
 }
 
 #restartBtn {
+    width: 100%;
     margin-top: 15px;
-    font-size: 18px;
-    padding: 8px 15px;
 }
 
-/* 浮き文字エフェクト */
+/* ===============================
+   ● 浮き文字
+================================= */
+
 .floating-text {
     position: absolute;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     animation: floatUp 0.8s ease-out forwards;
     pointer-events: none;
     z-index: 1000;
+    text-shadow: 1px 1px #fff;
 }
 
 @keyframes floatUp {
     0% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-30px); }
+    100% { opacity: 0; transform: translateY(-25px); }
 }
 
-#difficulty {
-    margin-bottom: 15px;
-    font-size: 16px;
+/* ===============================
+   ★ レアモグラのキラキラ演出
+================================= */
+
+.sparkle {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: url("./image/sparkle.png") no-repeat center / contain;
+    pointer-events: none;
+    animation: sparkleAnim 0.6s ease-out forwards;
+    image-rendering: pixelated;
+    z-index: 9999;
 }
-#difficulty label {
-    margin: 0 10px;
+
+@keyframes sparkleAnim {
+    0% { opacity: 1; transform: scale(0.2) translateY(0); }
+    50% { opacity: 1; transform: scale(1.2) translateY(-5px); }
+    100% { opacity: 0; transform: scale(0.5) translateY(-10px); }
 }
