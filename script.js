@@ -141,6 +141,8 @@ function endGame() {
 
     $("#finalScore").text("あなたのスコアは " + score + " 点！");
     $("#resultPopup").removeClass("hidden");
+    saveScore(score);   // ★ スコア保存
+    renderRanking();    // ★ ランキング表示
 }
 
 // ★ 浮き文字エフェクト
@@ -195,3 +197,36 @@ function createSparkleEffect(hole) {
         }, 600);
     }
 }
+
+//スコア保存
+function saveScore(score) {
+    const name = $("#playerName").val() || "名無し";
+
+    let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+    // { name: "AYA", score: 120 } 形式で保存
+    scores.push({ name: name, score: score });
+
+    // スコアの高い順に並べ替え
+    scores.sort((a, b) => b.score - a.score);
+
+    // 保存は最大10件まで
+    scores = scores.slice(0, 10);
+
+    localStorage.setItem("scores", JSON.stringify(scores));
+}
+
+//ランキング表示関数
+function renderRanking() {
+    let scores = JSON.parse(localStorage.getItem("scores")) || [];
+
+    const rankingList = $("#rankingList");
+    rankingList.empty();
+
+    // 上位3件
+    scores.slice(0, 3).forEach((data, index) => {
+        rankingList.append(`<li>${data.name}：${data.score} 点</li>`);
+    });
+}
+
+//

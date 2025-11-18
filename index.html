@@ -37,15 +37,22 @@
         <div class="hole"><div class="mole" data-type="normal"></div></div>
         <div class="hole"><div class="mole" data-type="normal"></div></div>
     </div>
-
+    <div id="playerNameArea">
+        名前：<input type="text" id="playerName" placeholder="名前を入力" maxlength="10">
+    </div>
     <button id="startBtn">Start!</button>
 </div>
 
 <!-- ▼ 終了ポップアップ ▼ -->
 <div id="resultPopup" class="hidden">
     <div class="popup-content">
-        <h2>ゲーム終了！</h2>
-        <p id="finalScore"></p>
+        <h2>結果</h2>
+        <p>スコア: <span id="finalScore"></span></p>
+
+        <!-- ★ ランキング表示 -->
+        <h3>ランキング</h3>
+        <ol id="rankingList"></ol>
+
         <button id="restartBtn">閉じる</button>
     </div>
 </div>
